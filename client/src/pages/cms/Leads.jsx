@@ -53,13 +53,13 @@ export default function Leads() {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950 pt-4 pb-4 mb-4 flex flex-col justify-between shadow-sm sm:flex-row sm:items-center sm:-mx-6 sm:px-6 -mx-4 px-4 -mt-4 sm:-mt-6">
-        <div className="mb-3 sm:mb-0">
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Lead Pipeline</h1>
-          <p className="text-slate-500 font-light mt-1 text-sm">Manage inquiries and bookings</p>
+      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950 pt-4 pb-4 mb-4 flex flex-row items-center justify-between shadow-sm sm:-mx-6 sm:px-6 -mx-4 px-4 -mt-4 sm:-mt-6 gap-2">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight truncate">Lead Pipeline</h1>
+          <p className="hidden sm:block text-slate-500 font-light mt-1 text-sm">Manage inquiries and bookings</p>
         </div>
 
-        <div className="flex w-full sm:w-auto items-center justify-between sm:justify-start space-x-2 sm:space-x-4">
+        <div className="flex flex-col sm:flex-row items-end sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 shrink-0">
           <button 
             onClick={() => setIsAddModalOpen(true)}
             className="bg-cyan-600 hover:bg-cyan-500 text-white px-3 sm:px-4 py-2 rounded-lg font-bold text-xs sm:text-sm tracking-wide flex items-center transition-colors shadow-lg shadow-cyan-600/20 whitespace-nowrap shrink-0"

@@ -164,7 +164,7 @@ const OverviewSection = ({ data }) => {
          {/* Recharts Timeline & Reminders */}
          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 grid grid-cols-1 xl:grid-cols-2 gap-6">
-               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm overflow-hidden relative">
+               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm overflow-hidden relative min-w-0">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl"></div>
                   <h3 className="text-sm font-black uppercase text-slate-400 tracking-widest mb-6 relative z-10">Financial Cash Flow</h3>
                   <div className="h-[350px] w-full relative z-10">
@@ -197,7 +197,7 @@ const OverviewSection = ({ data }) => {
                   </div>
                </div>
                
-               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm overflow-hidden relative">
+               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm overflow-hidden relative min-w-0">
                   <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-emerald-500/5 rounded-full blur-3xl"></div>
                   <h3 className="text-sm font-black uppercase text-slate-400 tracking-widest mb-6 relative z-10">Income vs Expense Trend</h3>
                   <div className="h-[350px] w-full relative z-10">
@@ -504,7 +504,7 @@ const TeamSection = ({ data }) => {
          {/* Graph Grid & Upcoming Assignments */}
          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm overflow-hidden relative">
+               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm overflow-hidden relative min-w-0">
                   <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/5 rounded-full blur-3xl"></div>
                   <h3 className="text-sm font-black uppercase text-slate-400 tracking-widest mb-6 relative z-10">Aggregate Earnings</h3>
                   <div className="h-[250px] relative z-10">
@@ -525,7 +525,7 @@ const TeamSection = ({ data }) => {
                   </div>
                </div>
 
-               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col overflow-hidden relative">
+               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col overflow-hidden relative min-w-0">
                   <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-emerald-500/5 rounded-full blur-3xl"></div>
                   <h3 className="text-sm font-black uppercase text-slate-400 tracking-widest mb-4 relative z-10"><Wallet className="w-4 h-4 inline mr-1"/> Overall Paid vs Due</h3>
                   

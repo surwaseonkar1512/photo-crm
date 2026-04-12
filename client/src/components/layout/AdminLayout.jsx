@@ -24,7 +24,7 @@ const AdminLayout = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-200 flex">
+    <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-200 flex">
       {/* Sidebar for Desktop & Mobile drawer */}
       <Sidebar 
         isOpen={sidebarOpen} 
@@ -32,7 +32,7 @@ const AdminLayout = () => {
         closeMobile={() => setMobileMenuOpen(false)}
       />
 
-      <div className={`flex flex-col flex-1 transition-all duration-300 ${sidebarOpen ? 'lg:pl-64' : 'lg:pl-20'}`}>
+      <div className={`flex flex-col flex-1 min-w-0 w-full transition-all duration-300 ${sidebarOpen ? 'lg:pl-64' : 'lg:pl-20'}`}>
         {/* Top Navbar */}
         <Navbar 
           toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
