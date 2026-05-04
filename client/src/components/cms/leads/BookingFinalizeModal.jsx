@@ -72,31 +72,31 @@ export default function BookingFinalizeModal({ isOpen, onClose, lead, onBookingC
               <form id="booking-form" onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Total Project Amount (Rs.)</label>
-                  <input 
-                    required 
-                    type="number" 
-                    value={totalAmount} 
-                    onChange={e=>setTotalAmount(e.target.value)} 
-                    className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-4 py-3 outline-none focus:border-emerald-500 transition-colors rounded-lg font-bold" 
+                  <input
+                    required
+                    type="number"
+                    value={totalAmount}
+                    onChange={e => setTotalAmount(e.target.value)}
+                    className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-4 py-3 outline-none focus:border-emerald-500 transition-colors rounded-lg font-bold"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Advance Received (Rs.)</label>
-                  <input 
-                    required 
-                    type="number" 
-                    value={advanceAmount} 
-                    onChange={e=>setAdvanceAmount(e.target.value)} 
-                    className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-4 py-3 outline-none focus:border-emerald-500 transition-colors rounded-lg font-bold text-emerald-600 dark:text-emerald-400" 
+                  <input
+                    required
+                    type="number"
+                    value={advanceAmount}
+                    onChange={e => setAdvanceAmount(e.target.value)}
+                    className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-4 py-3 outline-none focus:border-emerald-500 transition-colors rounded-lg font-bold text-emerald-600 dark:text-emerald-400"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Payment Method</label>
-                  <select 
-                    value={paymentMethod} 
-                    onChange={e=>setPaymentMethod(e.target.value)} 
+                  <select
+                    value={paymentMethod}
+                    onChange={e => setPaymentMethod(e.target.value)}
                     className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-4 py-3 outline-none focus:border-emerald-500 transition-colors rounded-lg text-sm"
                   >
                     <option value="UPI">UPI</option>
@@ -109,10 +109,10 @@ export default function BookingFinalizeModal({ isOpen, onClose, lead, onBookingC
             </div>
 
             <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
-              <button 
+              <button
                 form="booking-form"
-                type="submit" 
-                disabled={loading} 
+                type="submit"
+                disabled={loading}
                 className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase tracking-widest py-4 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-50"
               >
                 {loading ? "Processing..." : "Finalize Booking"}

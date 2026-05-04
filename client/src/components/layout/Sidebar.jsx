@@ -24,7 +24,9 @@ export const sidebarItems = [
     items: [
       { name: "Site Settings", icon: Settings, path: "/admin/settings/site" },
       { name: "Banners", icon: Camera, path: "/admin/banners" },
+      { name: "Categories", icon: Box, path: "/admin/categories" },
       { name: "Gallery", icon: Image, path: "/admin/gallery" },
+      { name: "Stories", icon: BookText, path: "/admin/stories" },
       { name: "Packages", icon: Box, path: "/admin/packages" },
     ],
   },

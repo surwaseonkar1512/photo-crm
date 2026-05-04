@@ -1,37 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
+import { useState } from "react";
 import { Search } from "lucide-react";
-import axiosInstance from "../../utils/axiosInstance";
+
+const PROJECTS = [
+  { id: 1, title: "Velvet Dream", category: "Editorial", city: "Milan", image: "https://picsum.photos/seed/p1/800/1000", size: "tall" },
+  { id: 2, title: "Noir Elegance", category: "Campaign", city: "Paris", image: "https://picsum.photos/seed/p2/800/800", size: "square" },
+  { id: 3, title: "Azure Horizon", category: "Concept", city: "London", image: "https://picsum.photos/seed/p3/1200/800", size: "wide" },
+  { id: 4, title: "The Glass House", category: "Architecture", city: "NY", image: "https://picsum.photos/seed/p4/800/1000", size: "tall" },
+  { id: 5, title: "Golden Hour", category: "Editorial", city: "Dubai", image: "https://picsum.photos/seed/p5/800/800", size: "square" },
+  { id: 6, title: "Urban Silence", category: "Concept", city: "Tokyo", image: "https://picsum.photos/seed/p6/1200/800", size: "wide" },
+  { id: 7, title: "Silk Road", category: "Fashion", city: "Beijing", image: "https://picsum.photos/seed/p7/800/1000", size: "tall" },
+  { id: 8, title: "Marble Muse", category: "Editorial", city: "Rome", image: "https://picsum.photos/seed/p8/800/800", size: "square" },
+];
+
+const CATEGORIES = ["All", "Editorial", "Campaign", "Concept", "Architecture", "Fashion"];
 
 export default function Portfolio() {
-  const [galleries, setGalleries] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [filter, setFilter] = useState("All");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [galRes, catRes] = await Promise.all([
-          axiosInstance.get("/cms/gallery?public=true"),
-          axiosInstance.get("/cms/category?public=true")
-        ]);
-        
-        // Add pseudo-size for masonry layout
-        const enhancedGalleries = (galRes.data || []).map((g, idx) => ({
-          ...g,
-          size: idx % 4 === 0 ? "wide" : idx % 3 === 0 ? "tall" : "square"
-        }));
-        
-        setGalleries(enhancedGalleries);
-        setCategories([{ name: "All", _id: "all" }, ...(catRes.data || [])]);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const filteredProjects = galleries.filter(p => filter === "All" || p.category?.name === filter || p.category === filter);
+  const filteredProjects = PROJECTS.filter(p => filter === "All" || p.category === filter);
 
   return (
     <div className="pt-32 min-h-screen px-6 md:px-12 pb-32">
@@ -43,15 +30,15 @@ export default function Portfolio() {
           </div>
           
           <div className="flex flex-wrap gap-4 md:gap-8 border-b border-luxury-dark/10 pb-4">
-            {categories.map(cat => (
+            {CATEGORIES.map(cat => (
               <button
-                key={cat._id}
-                onClick={() => setFilter(cat.name)}
+                key={cat}
+                onClick={() => setFilter(cat)}
                 className={`text-[10px] uppercase tracking-[0.2em] font-bold transition-all ${
-                  filter === cat.name ? "text-luxury-crimson" : "text-luxury-ink/40 hover:text-luxury-ink"
+                  filter === cat ? "text-luxury-crimson" : "text-luxury-ink/40 hover:text-luxury-ink"
                 }`}
               >
-                {cat.name}
+                {cat}
               </button>
             ))}
           </div>
@@ -64,7 +51,7 @@ export default function Portfolio() {
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
               <motion.div
-                key={project._id}
+                key={project.id}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -84,20 +71,21 @@ export default function Portfolio() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
                   <span className="text-[10px] uppercase tracking-[0.3em] text-luxury-gold font-bold mb-2">
-                    {project.category?.name || "Portfolio"}
+                    {project.category} — {project.city}
                   </span>
                   <h3 className="text-3xl font-serif text-white">{project.title}</h3>
                   <div className="h-[1px] w-0 group-hover:w-full bg-luxury-blue mt-4 transition-all duration-500" />
                 </div>
               </motion.div>
             ))}
-            {filteredProjects.length === 0 && (
-              <div className="col-span-full text-center py-20 text-luxury-ink/40">
-                No galleries found.
-              </div>
-            )}
           </AnimatePresence>
         </motion.div>
+
+        {/* Floating Search/Menu for Gallery */}
+        <div className="fixed bottom-12 right-12 z-40 bg-luxury-dark text-white p-6 rounded-full shadow-2xl flex items-center gap-4 cursor-pointer hover:scale-110 transition-transform">
+          <Search className="w-6 h-6" />
+          <span className="text-[10px] uppercase tracking-widest font-bold pr-2 hidden md:block">Search Archive</span>
+        </div>
       </div>
     </div>
   );

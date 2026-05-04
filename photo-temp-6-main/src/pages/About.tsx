@@ -1,29 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import axiosInstance from "../../utils/axiosInstance";
+import { motion } from "motion/react";
 
 export default function About() {
-  const [about, setAbout] = useState(null);
-  const [team, setTeam] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [aboutRes, teamRes] = await Promise.all([
-          axiosInstance.get("/cms/about"),
-          axiosInstance.get("/team")
-        ]);
-        setAbout(aboutRes.data);
-        if (teamRes.data && teamRes.data.team) {
-          setTeam(teamRes.data.team);
-        }
-      } catch (err) {
-        console.error("Failed to fetch about page data");
-      }
-    };
-    fetchData();
-  }, []);
-
   return (
     <div className="pt-32 min-h-screen pb-32">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
@@ -38,8 +15,8 @@ export default function About() {
           </motion.h1>
           <div className="absolute top-1/2 right-0 -translate-y-1/2 w-full md:w-2/3 lg:w-1/2 aspect-square md:aspect-video rounded-3xl overflow-hidden -z-10 opacity-30 md:opacity-100 mix-blend-multiply transition-all">
              <img 
-               src={about?.image || "https://picsum.photos/seed/photographer/1600/900"} 
-               alt={about?.title || "Aurelius Studio"} 
+               src="https://picsum.photos/seed/photographer/1600/900" 
+               alt="Aurelius Studio" 
                referrerPolicy="no-referrer"
                className="w-full h-full object-cover"
              />
@@ -49,7 +26,7 @@ export default function About() {
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-24 items-start">
           <div className="lg:col-span-5 space-y-8 md:space-y-12">
             <h2 className="text-3xl md:text-4xl font-serif leading-snug">
-              {about?.title || "Based in New York City, Aurelius is an award-winning photography house specializing in High-Style Editorial."}
+              Based in New York City, Aurelius is an award-winning photography house specializing in <span className="italic text-luxury-gold">High-Style Editorial</span>.
             </h2>
             <div className="flex gap-8 md:gap-12">
               <div className="space-y-2">
@@ -70,48 +47,20 @@ export default function About() {
           <div className="lg:col-span-1 hidden lg:block h-64 border-l border-luxury-dark/10" />
 
           <div className="lg:col-span-6 space-y-12">
-            {about?.description ? (
-              <div className="space-y-6">
-                {about.description.split('\n').map((paragraph, idx) => (
-                  <p key={idx} className="text-xl text-luxury-ink/70 leading-relaxed font-light">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            ) : (
-              <>
-                <p className="text-xl text-luxury-ink/70 leading-relaxed font-light">
-                  We believe that photography is more than just light hitting a sensor. It is the architectural alignment of shadow, emotion, and texture.
-                </p>
-                <p className="text-lg text-luxury-ink/60 leading-relaxed font-light">
-                  Founded by Julian Aurelius in 2014, the studio has redefined visual standards for premium brands worldwide. Our approach combines classical art theory with modern cinematic lighting to create images that don't just capture attention—they command it.
-                </p>
-              </>
-            )}
-            
+            <p className="text-xl text-luxury-ink/70 leading-relaxed font-light">
+              We believe that photography is more than just light hitting a sensor. It is the architectural alignment of shadow, emotion, and texture.
+            </p>
+            <p className="text-lg text-luxury-ink/60 leading-relaxed font-light">
+              Founded by Julian Aurelius in 2014, the studio has redefined visual standards for premium brands worldwide. Our approach combines classical art theory with modern cinematic lighting to create images that don't just capture attention—they command it.
+            </p>
             <div className="pt-12">
-              <h4 className="text-[10px] uppercase tracking-[0.4em] font-bold mb-8">The Team</h4>
+              <h4 className="text-[10px] uppercase tracking-[0.4em] font-bold mb-8">Selected Clients</h4>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-                {team.map(member => (
-                  <div key={member._id} className="flex flex-col gap-2 cursor-pointer group">
-                    <img 
-                      src={member.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}`} 
-                      alt={member.name}
-                      className="w-20 h-20 object-cover rounded-full filter grayscale group-hover:grayscale-0 transition-all duration-300" 
-                    />
-                    <div>
-                      <span className="text-xs uppercase tracking-widest font-medium group-hover:text-luxury-crimson transition-colors">
-                        {member.name}
-                      </span>
-                      <p className="text-[9px] uppercase tracking-widest text-luxury-ink/40">{member.role}</p>
-                    </div>
-                  </div>
+                {["VOGUE", "CHANEL", "TESLA", "ROLEX", "HERMÈS", "BRITISH AIRWAYS"].map(client => (
+                  <span key={client} className="text-xs uppercase tracking-widest font-medium opacity-40 hover:opacity-100 transition-opacity cursor-default">
+                    {client}
+                  </span>
                 ))}
-                {team.length === 0 && (
-                  <div className="col-span-full text-xs uppercase tracking-widest font-medium opacity-40">
-                    No team members found.
-                  </div>
-                )}
               </div>
             </div>
           </div>

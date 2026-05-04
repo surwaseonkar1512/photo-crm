@@ -35,11 +35,11 @@ export default function TaskModal({ isOpen, onClose, selectedDate, onTaskCreated
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validation
     const taskDateTime = dayjs(`${formData.date}T${formData.time}`);
     const now = dayjs();
-    
+
     if (taskDateTime.isBefore(now, 'day') || (taskDateTime.isSame(now, 'day') && taskDateTime.isBefore(now))) {
       toast.error("Cannot create task in past date/time");
       return;
@@ -78,13 +78,13 @@ export default function TaskModal({ isOpen, onClose, selectedDate, onTaskCreated
                 <X className="w-5 h-5" />
               </button>
             </div>
-            
+
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Title</label>
                 <input required type="text" name="title" value={formData.title} onChange={handleChange} className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all dark:text-white" placeholder="e.g. Album Editing" />
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Date</label>
@@ -95,7 +95,7 @@ export default function TaskModal({ isOpen, onClose, selectedDate, onTaskCreated
                   <input required type="time" name="time" value={formData.time} onChange={handleChange} className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all dark:text-white" />
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Assign To</label>
                 <select name="assignedTo" value={formData.assignedTo} onChange={handleChange} className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all dark:text-white">

@@ -9,6 +9,9 @@ const bannerSchema = new mongoose.Schema({
   mainImage: String,
   sideImage: String,
 
+  ctaText: { type: String, default: "Book Now" },
+  ctaLink: { type: String, default: "/packages" },
+
   isActive: { type: Boolean, default: true },
 }, { timestamps: true });
 

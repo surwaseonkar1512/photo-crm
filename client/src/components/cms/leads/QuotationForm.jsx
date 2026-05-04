@@ -32,7 +32,7 @@ export default function QuotationForm({ isOpen, onClose, lead, onQuotationCreate
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (items.some(i => !i.title || !i.price)) {
-        return toast.error("All items must have a name and price");
+      return toast.error("All items must have a name and price");
     }
 
     setStatus("sending");
@@ -46,7 +46,7 @@ export default function QuotationForm({ isOpen, onClose, lead, onQuotationCreate
       const res = await axiosInstance.post("/quotations", payload);
       toast.success("Quotation generated successfully!");
       setStatus("success");
-      
+
       onQuotationCreated(res.data.quotation);
       setTimeout(() => {
         onClose();
@@ -97,32 +97,32 @@ export default function QuotationForm({ isOpen, onClose, lead, onQuotationCreate
                   <h3 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 uppercase tracking-wider">
                     Line Items
                   </h3>
-                  
+
                   {items.map((item, index) => (
                     <div key={index} className="flex gap-4 mb-4 items-start">
                       <div className="flex-1">
-                        <input 
-                          required 
-                          type="text" 
-                          placeholder="Item Name (e.g. Pre-Wedding Shoot)" 
-                          value={item.title} 
-                          onChange={(e) => handleItemChange(index, 'title', e.target.value)} 
-                          className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 rounded-lg text-sm outline-none focus:border-cyan-500" 
+                        <input
+                          required
+                          type="text"
+                          placeholder="Item Name (e.g. Pre-Wedding Shoot)"
+                          value={item.title}
+                          onChange={(e) => handleItemChange(index, 'title', e.target.value)}
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 rounded-lg text-sm outline-none focus:border-cyan-500"
                         />
                       </div>
                       <div className="w-32">
-                         <input 
-                          required 
-                          type="number" 
-                          placeholder="Amount" 
+                        <input
+                          required
+                          type="number"
+                          placeholder="Amount"
                           min="0"
-                          value={item.price} 
-                          onChange={(e) => handleItemChange(index, 'price', e.target.value)} 
-                          className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 rounded-lg text-sm outline-none focus:border-cyan-500" 
+                          value={item.price}
+                          onChange={(e) => handleItemChange(index, 'price', e.target.value)}
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 rounded-lg text-sm outline-none focus:border-cyan-500"
                         />
                       </div>
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         onClick={() => handleRemoveItem(index)}
                         disabled={items.length === 1}
                         className="p-2 text-slate-400 hover:text-red-500 disabled:opacity-30 disabled:hover:text-slate-400 transition-colors mt-0.5"
@@ -132,15 +132,15 @@ export default function QuotationForm({ isOpen, onClose, lead, onQuotationCreate
                     </div>
                   ))}
 
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={handleAddItem}
                     className="flex items-center text-cyan-600 dark:text-cyan-400 font-bold text-sm tracking-wide hover:underline mt-2"
                   >
                     <Plus className="w-4 h-4 mr-1" /> Add Another Item
                   </button>
                 </div>
-                
+
                 <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
                   <div className="flex justify-end mb-4">
                     <label className="flex items-center cursor-pointer">
@@ -175,13 +175,13 @@ export default function QuotationForm({ isOpen, onClose, lead, onQuotationCreate
             </div>
 
             <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
-              <button 
+              <button
                 form="quotation-form"
-                type="submit" 
-                disabled={status === "sending" || status === "success"} 
+                type="submit"
+                disabled={status === "sending" || status === "success"}
                 className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold uppercase tracking-widest py-4 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 disabled:opacity-50"
               >
-                {status === "idle" ? <><Send className="w-5 h-5"/> Generate PDF Quotation</> : status === "sending" ? "Processing..." : "Quotation Saved!"}
+                {status === "idle" ? <><Send className="w-5 h-5" /> Generate PDF Quotation</> : status === "sending" ? "Processing..." : "Quotation Saved!"}
               </button>
             </div>
           </motion.div>

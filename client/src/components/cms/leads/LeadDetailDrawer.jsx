@@ -24,14 +24,14 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
   const [note, setNote] = useState("");
   const [notesList, setNotesList] = useState(lead?.notes || []);
   const [submittingNote, setSubmittingNote] = useState(false);
-  
+
   const [quotations, setQuotations] = useState([]);
   const [isQuotationFormOpen, setIsQuotationFormOpen] = useState(false);
   const [isSendDrawerOpen, setIsSendDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (lead?._id) {
-      axiosInstance.get(`/quotations/lead/${lead._id}`).then(({ data }) => setQuotations(data.quotations)).catch(() => {});
+      axiosInstance.get(`/quotations/lead/${lead._id}`).then(({ data }) => setQuotations(data.quotations)).catch(() => { });
     }
   }, [lead]);
 
@@ -39,12 +39,12 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
 
   const handleStatusChange = async (e) => {
     const newStatus = e.target.value;
-    
+
     if (newStatus === "advance_paid") {
-       if (onRequireBooking) {
-           onRequireBooking(lead);
-       }
-       return;
+      if (onRequireBooking) {
+        onRequireBooking(lead);
+      }
+      return;
     }
 
     try {
@@ -100,8 +100,8 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
             {/* Action Bar: Status Update */}
             <div className="bg-cyan-500/10 border border-cyan-500/20 p-4 rounded-xl flex justify-between items-center">
               <span className="text-cyan-600 dark:text-cyan-400 font-bold text-sm uppercase tracking-wider">Current Stage</span>
-              <select 
-                value={status} 
+              <select
+                value={status}
                 onChange={handleStatusChange}
                 className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded px-3 py-1.5 text-sm font-medium outline-none focus:border-cyan-500"
               >
@@ -121,7 +121,7 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
                 </div>
                 <div className="flex items-start">
                   <span className="w-24 text-slate-500 font-medium">Phone</span>
-                  <a href={`tel:${lead.phone}`} className="text-cyan-500 hover:underline flex items-center"><Phone className="w-3 h-3 mr-1"/>{lead.phone}</a>
+                  <a href={`tel:${lead.phone}`} className="text-cyan-500 hover:underline flex items-center"><Phone className="w-3 h-3 mr-1" />{lead.phone}</a>
                 </div>
                 {lead.whatsapp && lead.whatsapp !== lead.phone && (
                   <div className="flex items-start">
@@ -132,7 +132,7 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
                 {lead.email && (
                   <div className="flex items-start">
                     <span className="w-24 text-slate-500 font-medium">Email</span>
-                    <a href={`mailto:${lead.email}`} className="text-cyan-500 hover:underline flex items-center"><Mail className="w-3 h-3 mr-1"/>{lead.email}</a>
+                    <a href={`mailto:${lead.email}`} className="text-cyan-500 hover:underline flex items-center"><Mail className="w-3 h-3 mr-1" />{lead.email}</a>
                   </div>
                 )}
               </div>
@@ -152,7 +152,7 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
                   <span className="w-24 text-slate-500 font-medium">Date</span>
                   <span className="text-slate-900 dark:text-white flex items-center">
                     {lead.eventDate ? (
-                      <><Calendar className="w-3 h-3 mr-2 text-emerald-500"/> {new Date(lead.eventDate).toLocaleDateString()}</>
+                      <><Calendar className="w-3 h-3 mr-2 text-emerald-500" /> {new Date(lead.eventDate).toLocaleDateString()}</>
                     ) : "—"}
                   </span>
                 </div>
@@ -160,7 +160,7 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
                   <div className="flex items-start mt-2 pt-2 border-t border-slate-200 dark:border-slate-800">
                     <span className="w-24 text-slate-500 font-medium">Package</span>
                     <span className="text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 rounded flex items-center">
-                      <Package className="w-3 h-3 mr-1"/> {lead.package.variantName}
+                      <Package className="w-3 h-3 mr-1" /> {lead.package.variantName}
                     </span>
                   </div>
                 )}
@@ -186,13 +186,13 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
                   <FileText className="w-4 h-4 mr-2" /> Quotations
                 </h3>
                 <div className="flex gap-2">
-                  <button 
+                  <button
                     onClick={() => setIsSendDrawerOpen(true)}
                     className="bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors"
                   >
-                    Send 
+                    Send
                   </button>
-                  <button 
+                  <button
                     onClick={() => setIsQuotationFormOpen(true)}
                     className="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center transition-colors shadow-sm shadow-cyan-500/20"
                   >
@@ -200,7 +200,7 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
                   </button>
                 </div>
               </div>
-              
+
               <div className="space-y-3">
                 {quotations.map(q => (
                   <div key={q._id} className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex justify-between items-center group transition-colors hover:border-cyan-500/50">
@@ -215,7 +215,7 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
                         {new Date(q.createdAt).toLocaleDateString()} • Rs. {q.total.toLocaleString()}
                       </div>
                     </div>
-                    <a 
+                    <a
                       href={`${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/quotations/pdf/${q._id}?token=${localStorage.getItem('token')}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -239,17 +239,17 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
               <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center">
                 <Clock className="w-4 h-4 mr-2" /> Timeline & Notes
               </h3>
-              
+
               <div className="mb-4 flex space-x-2">
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Add a text note..."
                   className="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 rounded-lg text-sm outline-none focus:border-cyan-500"
                   onKeyDown={(e) => e.key === 'Enter' && handleAddNote()}
                 />
-                <button 
+                <button
                   onClick={handleAddNote}
                   disabled={submittingNote || !note.trim()}
                   className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors disabled:opacity-50"
@@ -279,10 +279,10 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
       </div>
 
       {isQuotationFormOpen && (
-        <QuotationForm 
-          isOpen={isQuotationFormOpen} 
-          onClose={() => setIsQuotationFormOpen(false)} 
-          lead={lead} 
+        <QuotationForm
+          isOpen={isQuotationFormOpen}
+          onClose={() => setIsQuotationFormOpen(false)}
+          lead={lead}
           onQuotationCreated={(quotation) => {
             setQuotations([quotation, ...quotations]);
           }}
@@ -290,13 +290,13 @@ export default function LeadDetailDrawer({ lead, onClose, onRequireBooking }) {
       )}
 
       {isSendDrawerOpen && (
-        <SendQuotationDrawer 
-          isOpen={isSendDrawerOpen} 
-          onClose={() => setIsSendDrawerOpen(false)} 
-          lead={lead} 
+        <SendQuotationDrawer
+          isOpen={isSendDrawerOpen}
+          onClose={() => setIsSendDrawerOpen(false)}
+          lead={lead}
           quotations={quotations}
           onStatusUpdate={(id, newStatus) => {
-             setQuotations(quotations.map(q => q._id === id ? { ...q, status: newStatus } : q));
+            setQuotations(quotations.map(q => q._id === id ? { ...q, status: newStatus } : q));
           }}
         />
       )}

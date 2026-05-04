@@ -39,11 +39,11 @@ export default function AddTeamModal({ isOpen, onClose, onMemberAdded }) {
       const data = new FormData();
       Object.keys(formData).forEach(key => {
         if (["skills", "gear", "tools"].includes(key)) {
-           // parse comma separated into array stringified
-           const arr = formData[key].split(",").map(i => i.trim()).filter(Boolean);
-           data.append(key, JSON.stringify(arr));
+          // parse comma separated into array stringified
+          const arr = formData[key].split(",").map(i => i.trim()).filter(Boolean);
+          data.append(key, JSON.stringify(arr));
         } else {
-           data.append(key, formData[key]);
+          data.append(key, formData[key]);
         }
       });
 
@@ -54,7 +54,7 @@ export default function AddTeamModal({ isOpen, onClose, onMemberAdded }) {
       await axiosInstance.post("/team", data, {
         headers: { "Content-Type": "multipart/form-data" }
       });
-      
+
       toast.success("Team member added");
       onMemberAdded();
       onClose();
@@ -89,20 +89,20 @@ export default function AddTeamModal({ isOpen, onClose, onMemberAdded }) {
 
           <div className="p-6 overflow-y-auto custom-scrollbar">
             <form id="team-form" onSubmit={handleSubmit} className="space-y-6">
-              
+
               <div className="flex flex-col sm:flex-row gap-6">
                 {/* Photo Upload area */}
                 <div className="w-full sm:w-1/3 flex flex-col items-center gap-3">
                   <div className="w-32 h-32 rounded-full border-2 border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-center overflow-hidden bg-slate-50 dark:bg-slate-900 relative group">
                     {photoFile ? (
-                       <img src={URL.createObjectURL(photoFile)} alt="preview" className="w-full h-full object-cover" />
+                      <img src={URL.createObjectURL(photoFile)} alt="preview" className="w-full h-full object-cover" />
                     ) : (
-                       <Image className="w-8 h-8 text-slate-400" />
+                      <Image className="w-8 h-8 text-slate-400" />
                     )}
                     <label className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white cursor-pointer transition-opacity">
-                       <Upload className="w-5 h-5 mb-1" />
-                       <span className="text-[10px] font-bold uppercase tracking-wider">Upload</span>
-                       <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
+                      <Upload className="w-5 h-5 mb-1" />
+                      <span className="text-[10px] font-bold uppercase tracking-wider">Upload</span>
+                      <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
                     </label>
                   </div>
                   <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">Profile Photo</span>
@@ -133,33 +133,33 @@ export default function AddTeamModal({ isOpen, onClose, onMemberAdded }) {
               <hr className="border-slate-200 dark:border-slate-800" />
 
               <div className="space-y-4">
-                 <div>
-                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Skills (comma separated)</label>
-                    <input type="text" name="skills" value={formData.skills} onChange={handleChange} placeholder="Photographer, Videographer, Editor..." className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 outline-none focus:border-cyan-500 rounded-lg text-sm" />
-                 </div>
-                 <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Camera Gear</label>
-                      <input type="text" name="gear" value={formData.gear} onChange={handleChange} placeholder="Sony A7III, Canon R6..." className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 outline-none focus:border-cyan-500 rounded-lg text-sm" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Other Tools</label>
-                      <input type="text" name="tools" value={formData.tools} onChange={handleChange} placeholder="Gimbal, Drone, Lights..." className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 outline-none focus:border-cyan-500 rounded-lg text-sm" />
-                    </div>
-                 </div>
-                 <div>
-                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Extra Notes</label>
-                    <textarea name="notes" value={formData.notes} onChange={handleChange} rows="2" className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 outline-none focus:border-cyan-500 rounded-lg text-sm"></textarea>
-                 </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Skills (comma separated)</label>
+                  <input type="text" name="skills" value={formData.skills} onChange={handleChange} placeholder="Photographer, Videographer, Editor..." className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 outline-none focus:border-cyan-500 rounded-lg text-sm" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Camera Gear</label>
+                    <input type="text" name="gear" value={formData.gear} onChange={handleChange} placeholder="Sony A7III, Canon R6..." className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 outline-none focus:border-cyan-500 rounded-lg text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Other Tools</label>
+                    <input type="text" name="tools" value={formData.tools} onChange={handleChange} placeholder="Gimbal, Drone, Lights..." className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 outline-none focus:border-cyan-500 rounded-lg text-sm" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5">Extra Notes</label>
+                  <textarea name="notes" value={formData.notes} onChange={handleChange} rows="2" className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 outline-none focus:border-cyan-500 rounded-lg text-sm"></textarea>
+                </div>
               </div>
             </form>
           </div>
 
           <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 shrink-0">
-            <button 
+            <button
               form="team-form"
-              type="submit" 
-              disabled={loading} 
+              type="submit"
+              disabled={loading}
               className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold uppercase tracking-widest py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 disabled:opacity-50"
             >
               {loading ? "Adding..." : "Save Team Member"}

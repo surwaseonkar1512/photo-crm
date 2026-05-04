@@ -1,40 +1,59 @@
-import React, { useEffect, useState } from "react";
-import { Outlet, useLocation, Link } from "react-router-dom";
-import { motion, AnimatePresence, useScroll } from "framer-motion";
-import axiosInstance from "../../utils/axiosInstance";
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-import PublicNavbar from "./PublicNavbar";
-import PublicFooter from "./PublicFooter";
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-export default function PublicLayout() {
-  const [settings, setSettings] = useState(null);
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll } from "motion/react";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Portfolio from "./pages/Portfolio";
+import Pricing from "./pages/Pricing";
+import Contact from "./pages/Contact";
+
+export default function App() {
+  const [currentPage, setCurrentPage] = useState("home");
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
   const { scrollYProgress } = useScroll();
-
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const { data } = await axiosInstance.get("/cms/site-settings");
-        setSettings(data);
-      } catch (err) {
-        // console.error(err);
-      } finally {
-        // Simulate premium loading state for 1 second on initial load
-        setTimeout(() => setLoading(false), 1000);
-      }
-    };
-    fetchSettings();
-  }, []);
 
   // Smooth scroll to top on page change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [location.pathname]);
+  }, [currentPage]);
+
+  // Premium loading state
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case "home":
+        return <Home />;
+      case "about":
+        return <About />;
+      case "portfolio":
+        return <Portfolio />;
+      case "pricing":
+        return <Pricing />;
+      case "contact":
+        return <Contact />;
+      default:
+        return <Home />;
+    }
+  };
 
   if (loading) {
     return (
-      <div className="fixed inset-0 z-[100] bg-luxury-dark flex flex-col items-center justify-center font-sans">
+      <div className="fixed inset-0 z-[100] bg-luxury-dark flex flex-col items-center justify-center">
         <motion.div
            initial={{ opacity: 0 }}
            animate={{ opacity: 1 }}
@@ -44,9 +63,9 @@ export default function PublicLayout() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="text-white text-4xl md:text-6xl font-serif tracking-[0.5em] mb-8 uppercase"
+            className="text-white text-4xl md:text-6xl font-serif tracking-[0.5em] mb-8"
           >
-            {settings?.siteName || "AURELIUS"}
+            AURELIUS
           </motion.h2>
           <div className="w-48 h-[1px] bg-white/20 mx-auto relative overflow-hidden">
             <motion.div 
@@ -70,7 +89,7 @@ export default function PublicLayout() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-luxury-blue/5 blur-[150px] rounded-full" />
       </div>
 
-      <PublicNavbar settings={settings} />
+      <Navbar currentPage={currentPage} onPageChange={setCurrentPage} />
       
       {/* Scroll Progress Bar - Mobile Optimized */}
       <motion.div
@@ -81,37 +100,34 @@ export default function PublicLayout() {
       <main className="relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
-            key={location.pathname}
+            key={currentPage}
             initial={{ opacity: 0, filter: "blur(10px)" }}
             animate={{ opacity: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, filter: "blur(10px)" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Pass settings context down to outlet pages */}
-            <Outlet context={{ settings }} />
+            {renderPage()}
           </motion.div>
         </AnimatePresence>
       </main>
 
-      <PublicFooter settings={settings} />
+      <Footer />
 
       {/* Floating CTA for high conversion */}
       <AnimatePresence>
-        {location.pathname !== '/contact' && (
-          <motion.div
+        {currentPage !== 'contact' && (
+          <motion.button
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="fixed bottom-8 right-6 md:bottom-12 md:right-16 z-50"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setCurrentPage('contact')}
+            className="fixed bottom-8 right-6 md:bottom-12 md:right-16 z-50 bg-luxury-crimson text-white px-6 py-4 md:px-8 md:py-5 rounded-full shadow-2xl flex items-center gap-3 md:gap-4 group"
           >
-            <Link to="/contact" className="bg-luxury-crimson text-white px-6 py-4 md:px-8 md:py-5 rounded-full shadow-2xl flex items-center gap-3 md:gap-4 group">
-              <span className="text-[9px] md:text-[10px] uppercase tracking-[0.4em] font-bold">Inquire</span>
-              <motion.div 
-                whileHover={{ scale: 1.5 }}
-                className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full transition-transform" 
-              />
-            </Link>
-          </motion.div>
+            <span className="text-[9px] md:text-[10px] uppercase tracking-[0.4em] font-bold">Inquire</span>
+            <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full group-hover:scale-150 transition-transform" />
+          </motion.button>
         )}
       </AnimatePresence>
     </div>

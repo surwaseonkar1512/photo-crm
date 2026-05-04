@@ -13,7 +13,7 @@ export default function SendQuotationDrawer({ isOpen, onClose, lead, quotations,
   const handleSendEmail = async () => {
     if (!selectedQuoteId) return toast.warning("Please select a quotation first.");
     if (!lead.email) return toast.warning("Lead has no registered email address.");
-    
+
     setStatus("sending");
     try {
       await axiosInstance.post(`/quotations/send/${selectedQuoteId}`, { email: lead.email });
@@ -33,14 +33,14 @@ export default function SendQuotationDrawer({ isOpen, onClose, lead, quotations,
 
     const phoneNum = lead.whatsapp || lead.phone;
     const cleanNum = phoneNum.replace(/[^0-9]/g, '');
-    
+
     const quote = quotations.find(q => q._id === selectedQuoteId);
-    
+
     const pdfUrl = `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/quotations/pdf/${quote._id}`;
     const text = `Hello ${lead.name}!%0A%0AWe have prepared your quotation (${quote.quotationNumber}) for your upcoming shoot.%0A%0ATotal Amount: Rs. ${quote.total}%0A%0AYou can review and download the official PDF quotation here: ${pdfUrl}%0A%0ALet us know if you have any questions!`;
 
     window.open(`https://wa.me/${cleanNum}?text=${text}`, '_blank');
-    
+
     // Optimistically update status to 'sent'
     onStatusUpdate(selectedQuoteId, "sent");
     onClose();
@@ -71,18 +71,18 @@ export default function SendQuotationDrawer({ isOpen, onClose, lead, quotations,
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
-              
+
               <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Select Quotation</label>
                 <div className="space-y-2">
                   {quotations.length === 0 ? (
-                     <div className="text-sm text-red-400 italic">No Quotations Exist. Please create one.</div>
+                    <div className="text-sm text-red-400 italic">No Quotations Exist. Please create one.</div>
                   ) : quotations.map(q => (
                     <label key={q._id} className={`flex items-center p-4 border rounded-xl cursor-pointer transition-colors ${selectedQuoteId === q._id ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-900/10' : 'border-slate-200 dark:border-slate-800 hover:border-cyan-300'}`}>
-                      <input 
-                        type="radio" 
-                        name="quote" 
-                        value={q._id} 
+                      <input
+                        type="radio"
+                        name="quote"
+                        value={q._id}
                         checked={selectedQuoteId === q._id}
                         onChange={(e) => setSelectedQuoteId(e.target.value)}
                         className="text-cyan-500 w-4 h-4 mr-3"
@@ -116,20 +116,20 @@ export default function SendQuotationDrawer({ isOpen, onClose, lead, quotations,
             </div>
 
             <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 space-y-3">
-              <button 
+              <button
                 onClick={handleSendEmail}
                 disabled={status === "sending" || !lead.email}
                 className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 font-bold uppercase tracking-widest py-3 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                {status === "sending" ? "Sending..." : <><Send className="w-4 h-4"/> Send via Email</>}
+                {status === "sending" ? "Sending..." : <><Send className="w-4 h-4" /> Send via Email</>}
               </button>
 
-              <button 
+              <button
                 onClick={handleSendWhatsApp}
                 disabled={(!lead.phone && !lead.whatsapp)}
                 className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold uppercase tracking-widest py-3 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/20 disabled:opacity-50"
               >
-                <MessageCircle className="w-4 h-4"/> Send via WhatsApp
+                <MessageCircle className="w-4 h-4" /> Send via WhatsApp
               </button>
             </div>
           </motion.div>

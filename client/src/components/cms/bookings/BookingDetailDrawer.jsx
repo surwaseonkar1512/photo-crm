@@ -8,7 +8,7 @@ export default function BookingDetailDrawer({ booking, onClose }) {
   const [tasks, setTasks] = useState([]);
   const [payments, setPayments] = useState([]);
   const [invoices, setInvoices] = useState([]);
-  
+
   // Create task state
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDate, setTaskDate] = useState("");
@@ -117,22 +117,22 @@ export default function BookingDetailDrawer({ booking, onClose }) {
               <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center">
                 <ListTodo className="w-4 h-4 mr-2" /> Task Management
               </h3>
-              
+
               <div className="flex gap-2 mb-4">
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={taskTitle}
                   onChange={(e) => setTaskTitle(e.target.value)}
                   placeholder="Task title..."
                   className="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 rounded-lg text-sm outline-none focus:border-cyan-500"
                 />
-                <input 
-                  type="date" 
+                <input
+                  type="date"
                   value={taskDate}
                   onChange={(e) => setTaskDate(e.target.value)}
                   className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 rounded-lg text-sm outline-none focus:border-cyan-500 w-36"
                 />
-                <button 
+                <button
                   onClick={handleAddTask}
                   className="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-2 rounded-lg text-sm font-bold transition-colors shadow-sm"
                 >
@@ -144,13 +144,13 @@ export default function BookingDetailDrawer({ booking, onClose }) {
                 {tasks.map(t => (
                   <div key={t._id} className="flex items-center justify-between bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 px-4 py-3 rounded-xl hover:border-cyan-500/50 transition-colors">
                     <div className="flex items-center gap-3">
-                       <button onClick={() => handleToggleTaskStatus(t._id, t.status)} className={`${t.status === 'completed' ? 'text-emerald-500' : 'text-slate-400 hover:text-cyan-500'} transition-colors`}>
-                         <CheckSquare className="w-5 h-5" />
-                       </button>
-                       <div>
-                         <p className={`text-sm font-bold ${t.status === 'completed' ? 'line-through text-slate-500' : 'text-slate-900 dark:text-slate-100'}`}>{t.title}</p>
-                         <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">{new Date(t.date).toLocaleDateString()}</p>
-                       </div>
+                      <button onClick={() => handleToggleTaskStatus(t._id, t.status)} className={`${t.status === 'completed' ? 'text-emerald-500' : 'text-slate-400 hover:text-cyan-500'} transition-colors`}>
+                        <CheckSquare className="w-5 h-5" />
+                      </button>
+                      <div>
+                        <p className={`text-sm font-bold ${t.status === 'completed' ? 'line-through text-slate-500' : 'text-slate-900 dark:text-slate-100'}`}>{t.title}</p>
+                        <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">{new Date(t.date).toLocaleDateString()}</p>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -163,7 +163,7 @@ export default function BookingDetailDrawer({ booking, onClose }) {
               <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center">
                 <Wallet className="w-4 h-4 mr-2" /> Financials
               </h3>
-              
+
               <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl mb-6">
                 <div className="flex justify-between items-end mb-2">
                   <div>
@@ -181,15 +181,15 @@ export default function BookingDetailDrawer({ booking, onClose }) {
                 <div className="bg-orange-50 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 p-4 rounded-xl mb-6 flex flex-col gap-3">
                   <h4 className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider mb-1">Add Payment</h4>
                   <div className="flex gap-2">
-                    <input 
-                      type="number" 
+                    <input
+                      type="number"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="Amount..."
                       className="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 rounded-lg text-sm outline-none focus:border-cyan-500"
                     />
-                    <select 
-                      value={method} 
+                    <select
+                      value={method}
                       onChange={(e) => setMethod(e.target.value)}
                       className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-3 py-2 rounded-lg text-sm outline-none focus:border-cyan-500"
                     >
@@ -198,7 +198,7 @@ export default function BookingDetailDrawer({ booking, onClose }) {
                       <option value="Bank">Bank</option>
                     </select>
                   </div>
-                  <button 
+                  <button
                     onClick={handleAddPayment}
                     disabled={isPaymentLoading}
                     className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-2.5 rounded-lg text-sm font-bold uppercase tracking-wider shadow-sm transition hover:bg-slate-800 dark:hover:bg-slate-200 disabled:opacity-50"
@@ -224,23 +224,23 @@ export default function BookingDetailDrawer({ booking, onClose }) {
                         <p className="text-xs text-slate-500 font-medium mt-1 uppercase">₹{inv.amount.toLocaleString()} on {new Date(inv.date).toLocaleDateString()}</p>
                       </div>
                     </div>
-                    
+
                     <div className="flex gap-2 mt-2">
-                       {inv.pdfUrl && (
-                         <>
-                           <a href={inv.pdfUrl} target="_blank" rel="noreferrer" className="flex-1 flex justify-center items-center py-2 bg-slate-100 dark:bg-slate-800 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 text-slate-700 dark:text-slate-300 hover:text-cyan-600 text-xs font-bold uppercase tracking-wider rounded transition-colors group-hover:border-cyan-500/30">
-                             <Download className="w-3.5 h-3.5 mr-1" /> PDF
-                           </a>
-                           <button 
-                             onClick={() => {
-                               const msg = `Hello ${booking.clientName},%0A%0AYour payment invoice (${inv.type}) is ready.%0AAmount: Rs. ${inv.amount}%0A%0ADownload here:%0A${inv.pdfUrl}%0A%0A- Our Studio`;
-                               window.open(`https://wa.me/?text=${msg}`, '_blank');
-                             }}
-                             className="flex-1 flex justify-center items-center py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:hover:bg-emerald-500/20 text-xs font-bold uppercase tracking-wider rounded transition-colors">
-                             <Smartphone className="w-3.5 h-3.5 mr-1" /> Send
-                           </button>
-                         </>
-                       )}
+                      {inv.pdfUrl && (
+                        <>
+                          <a href={inv.pdfUrl} target="_blank" rel="noreferrer" className="flex-1 flex justify-center items-center py-2 bg-slate-100 dark:bg-slate-800 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 text-slate-700 dark:text-slate-300 hover:text-cyan-600 text-xs font-bold uppercase tracking-wider rounded transition-colors group-hover:border-cyan-500/30">
+                            <Download className="w-3.5 h-3.5 mr-1" /> PDF
+                          </a>
+                          <button
+                            onClick={() => {
+                              const msg = `Hello ${booking.clientName},%0A%0AYour payment invoice (${inv.type}) is ready.%0AAmount: Rs. ${inv.amount}%0A%0ADownload here:%0A${inv.pdfUrl}%0A%0A- Our Studio`;
+                              window.open(`https://wa.me/?text=${msg}`, '_blank');
+                            }}
+                            className="flex-1 flex justify-center items-center py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:hover:bg-emerald-500/20 text-xs font-bold uppercase tracking-wider rounded transition-colors">
+                            <Smartphone className="w-3.5 h-3.5 mr-1" /> Send
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}

@@ -11,7 +11,7 @@ const Banners = () => {
   const [editingId, setEditingId] = useState(null);
 
   const [formData, setFormData] = useState({
-    title: "", subtitle: "", slogan: "", description: "", isActive: true
+    title: "", subtitle: "", slogan: "", description: "", ctaText: "Book Now", ctaLink: "/packages", isActive: true
   });
   const [files, setFiles] = useState({ mainImage: null, sideImage: null });
   const [previews, setPreviews] = useState({ mainImage: null, sideImage: null });
@@ -32,7 +32,7 @@ const Banners = () => {
   };
 
   const resetForm = () => {
-    setFormData({ title: "", subtitle: "", slogan: "", description: "", isActive: true });
+    setFormData({ title: "", subtitle: "", slogan: "", description: "", ctaText: "Book Now", ctaLink: "/packages", isActive: true });
     setFiles({ mainImage: null, sideImage: null });
     setPreviews({ mainImage: null, sideImage: null });
     setEditingId(null);
@@ -46,6 +46,8 @@ const Banners = () => {
         subtitle: banner.subtitle || "",
         slogan: banner.slogan || "",
         description: banner.description || "",
+        ctaText: banner.ctaText || "Book Now",
+        ctaLink: banner.ctaLink || "/packages",
         isActive: banner.isActive,
       });
       setPreviews({
@@ -130,7 +132,7 @@ const Banners = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <AnimatePresence>
-            {banners.map((banner) => (
+            {banners?.map?.((banner) => (
               <motion.div
                 key={banner._id}
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
@@ -207,7 +209,15 @@ const Banners = () => {
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Slogan</label>
                   <input type="text" value={formData.slogan} onChange={e => setFormData({ ...formData, slogan: e.target.value })} className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-cyan-500" />
                 </div>
-                <div className="col-span-2 sm:col-span-1 flex items-center mt-6">
+                <div className="col-span-2 sm:col-span-1">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">CTA Text</label>
+                  <input type="text" value={formData.ctaText} onChange={e => setFormData({ ...formData, ctaText: e.target.value })} className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-cyan-500" />
+                </div>
+                <div className="col-span-2 sm:col-span-1">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">CTA Link</label>
+                  <input type="text" value={formData.ctaLink} onChange={e => setFormData({ ...formData, ctaLink: e.target.value })} className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-cyan-500" />
+                </div>
+                <div className="col-span-2 flex items-center mt-2">
                   <label className="flex items-center gap-2 cursor-pointer text-slate-700 dark:text-slate-300">
                     <input type="checkbox" checked={formData.isActive} onChange={e => setFormData({ ...formData, isActive: e.target.checked })} className="w-5 h-5 rounded text-cyan-600 focus:ring-cyan-500 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700" />
                     Display on Website

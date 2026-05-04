@@ -4,6 +4,9 @@ const Testimonial = require("../models/Testimonial.model");
 const Package = require("../models/Package.model");
 const About = require("../models/About.model");
 const Contact = require("../models/Contact.model");
+const Category = require("../models/Category.model");
+const Gallery = require("../models/Gallery.model");
+const Story = require("../models/Story.model");
 
 // ==========================================
 // SITE SETTINGS (Singleton)
@@ -243,5 +246,197 @@ exports.updateContact = async (req, res) => {
     res.json(contact);
   } catch (err) {
     res.status(500).json({ message: "Error updating Contact Us", error: err.message });
+  }
+};
+
+// ==========================================
+// CATEGORIES
+// ==========================================
+exports.getCategories = async (req, res) => {
+  try {
+    const filter = req.query.public === 'true' ? { isActive: true } : {};
+    const categories = await Category.find(filter).sort({ createdAt: -1 });
+    res.json(categories);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching categories", error: err.message });
+  }
+};
+
+exports.createCategory = async (req, res) => {
+  try {
+    const data = { ...req.body };
+    if (req.file) data.image = req.file.cloudinaryUrl;
+    const category = await Category.create(data);
+    res.status(201).json(category);
+  } catch (err) {
+    res.status(500).json({ message: "Error creating category", error: err.message });
+  }
+};
+
+exports.updateCategory = async (req, res) => {
+  try {
+    const data = { ...req.body };
+    if (req.file) data.image = req.file.cloudinaryUrl;
+    const category = await Category.findByIdAndUpdate(req.params.id, data, { new: true });
+    res.json(category);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating category", error: err.message });
+  }
+};
+
+exports.deleteCategory = async (req, res) => {
+  try {
+    await Category.findByIdAndDelete(req.params.id);
+    res.json({ message: "Category deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting category", error: err.message });
+  }
+};
+
+// ==========================================
+// GALLERIES
+// ==========================================
+exports.getGalleries = async (req, res) => {
+  try {
+    const filter = req.query.public === 'true' ? { isActive: true } : {};
+    if (req.query.category) filter.category = req.query.category;
+    if (req.query.isFeatured) filter.isFeatured = req.query.isFeatured === 'true';
+
+    const galleries = await Gallery.find(filter).populate('category').sort({ createdAt: -1 });
+    res.json(galleries);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching galleries", error: err.message });
+  }
+};
+
+exports.createGallery = async (req, res) => {
+  try {
+    const data = { ...req.body };
+    if (req.file) data.image = req.file.cloudinaryUrl;
+    const gallery = await Gallery.create(data);
+    res.status(201).json(gallery);
+  } catch (err) {
+    res.status(500).json({ message: "Error creating gallery", error: err.message });
+  }
+};
+
+exports.updateGallery = async (req, res) => {
+  try {
+    const data = { ...req.body };
+    if (req.file) data.image = req.file.cloudinaryUrl;
+    const gallery = await Gallery.findByIdAndUpdate(req.params.id, data, { new: true });
+    res.json(gallery);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating gallery", error: err.message });
+  }
+};
+
+exports.deleteGallery = async (req, res) => {
+  try {
+    await Gallery.findByIdAndDelete(req.params.id);
+    res.json({ message: "Gallery deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting gallery", error: err.message });
+  }
+};
+
+// ==========================================
+// STORIES
+// ==========================================
+exports.getStories = async (req, res) => {
+  try {
+    const filter = req.query.public === 'true' ? { isActive: true } : {};
+    if (req.query.showOnHome) filter.showOnHome = req.query.showOnHome === 'true';
+    const stories = await Story.find(filter).sort({ createdAt: -1 });
+    res.json(stories);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching stories", error: err.message });
+  }
+};
+
+exports.getStoryBySlug = async (req, res) => {
+  try {
+    const story = await Story.findOne({ slug: req.params.slug });
+    if (!story) return res.status(404).json({ message: "Story not found" });
+    res.json(story);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching story", error: err.message });
+  }
+};
+
+exports.createStory = async (req, res) => {
+  try {
+    const data = { ...req.body };
+    if (req.files) {
+      if (req.files.mainImage && req.files.mainImage[0]) data.mainImage = req.files.mainImage[0].cloudinaryUrl;
+      if (req.files.sideImage && req.files.sideImage[0]) data.sideImage = req.files.sideImage[0].cloudinaryUrl;
+      
+      const galleryImages = [];
+      for (const key in req.files) {
+        if (key.startsWith('galleryImages_') && req.files[key][0]) {
+          galleryImages.push(req.files[key][0].cloudinaryUrl);
+        }
+      }
+      if (galleryImages.length > 0) data.galleryImages = galleryImages;
+    }
+    const story = await Story.create(data);
+    res.status(201).json(story);
+  } catch (err) {
+    res.status(500).json({ message: "Error creating story", error: err.message });
+  }
+};
+
+exports.updateStory = async (req, res) => {
+  try {
+    const data = { ...req.body };
+    if (req.files) {
+      if (req.files.mainImage && req.files.mainImage[0]) data.mainImage = req.files.mainImage[0].cloudinaryUrl;
+      if (req.files.sideImage && req.files.sideImage[0]) data.sideImage = req.files.sideImage[0].cloudinaryUrl;
+      
+      const newGalleryImages = [];
+      for (const key in req.files) {
+        if (key.startsWith('galleryImages_') && req.files[key][0]) {
+          newGalleryImages.push(req.files[key][0].cloudinaryUrl);
+        }
+      }
+      
+      if (newGalleryImages.length > 0) {
+        // If updating gallery images, we append or replace. Let's assume append or the client manages the array string manually.
+        // For simplicity, we just use the new ones if provided, or the client handles deletion separately.
+        const existingStory = await Story.findById(req.params.id);
+        const existingGallery = existingStory.galleryImages || [];
+        
+        let clientExistingGallery = [];
+        if (data.existingGalleryImages) {
+          try {
+             clientExistingGallery = JSON.parse(data.existingGalleryImages);
+          } catch(e){}
+        }
+
+        data.galleryImages = [...clientExistingGallery, ...newGalleryImages];
+      } else if (data.existingGalleryImages) {
+        try {
+           data.galleryImages = JSON.parse(data.existingGalleryImages);
+        } catch(e){}
+      }
+    } else if (data.existingGalleryImages) {
+      try {
+         data.galleryImages = JSON.parse(data.existingGalleryImages);
+      } catch(e){}
+    }
+
+    const story = await Story.findByIdAndUpdate(req.params.id, data, { new: true });
+    res.json(story);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating story", error: err.message });
+  }
+};
+
+exports.deleteStory = async (req, res) => {
+  try {
+    await Story.findByIdAndDelete(req.params.id);
+    res.json({ message: "Story deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting story", error: err.message });
   }
 };

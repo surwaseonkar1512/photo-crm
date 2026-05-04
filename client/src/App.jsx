@@ -18,11 +18,16 @@ import Albums from "./pages/cms/Albums";
 import Khatabook from "./pages/cms/Khatabook";
 import Team from "./pages/cms/Team";
 import ExpenseSystem from "./pages/cms/ExpenseSystem";
+import Categories from "./pages/cms/Categories";
+import Galleries from "./pages/cms/Galleries";
+import Stories from "./pages/cms/Stories";
 import Home from "./pages/public/Home";
 import PublicLayout from "./components/layout/PublicLayout";
 import About from "./pages/public/About";
 import PublicPackages from "./pages/public/Packages";
 import Portfolio from "./pages/public/Portfolio";
+import PublicStories from "./pages/public/PublicStories";
+import StoryDetails from "./pages/public/StoryDetails";
 import Contact from "./pages/public/Contact";
 
 import CalendarDashboard from "./pages/cms/CalendarDashboard";
@@ -37,6 +42,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/stories" element={<PublicStories />} />
+            <Route path="/story/:slug" element={<StoryDetails />} />
             <Route path="/packages" element={<PublicPackages />} />
             <Route path="/contact" element={<Contact />} />
           </Route>
@@ -68,6 +75,9 @@ function App() {
             <Route path="calendar" element={<CalendarDashboard />} />
             <Route path="team" element={<Team />} />
             <Route path="settings" element={<SiteSettings />} />
+            <Route path="categories" element={<Categories />} />
+            <Route path="gallery" element={<Galleries />} />
+            <Route path="stories" element={<Stories />} />
             {/* Additional routes will be placed here (e.g., /pipeline) */}
             <Route path="*" element={<div className="flex items-center justify-center h-[50vh] text-gray-400 font-medium">Page under construction...</div>} />
           </Route>

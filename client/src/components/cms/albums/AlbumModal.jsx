@@ -59,26 +59,26 @@ export default function AlbumModal({ isOpen, onClose, onCreated }) {
     e.preventDefault();
 
     if (formData.mode === "booking" && !formData.bookingId) {
-       return toast.error("Please select a booking.");
+      return toast.error("Please select a booking.");
     }
     if (formData.mode === "manual" && (!formData.clientName || !formData.eventDate)) {
-       return toast.error("Please provide Client Name and Event Date.");
+      return toast.error("Please provide Client Name and Event Date.");
     }
 
     if (formData.deliveryMethod === "digital" && (!formData.driveLink || !formData.driveLink.includes("drive.google.com"))) {
-       return toast.error("Must be a valid Google Drive link.");
+      return toast.error("Must be a valid Google Drive link.");
     }
-    
+
     setLoading(true);
     try {
       const payload = { ...formData };
       if (payload.mode === "booking") {
-         delete payload.clientPhone;
-         delete payload.eventDate;
+        delete payload.clientPhone;
+        delete payload.eventDate;
       } else {
-         delete payload.bookingId;
+        delete payload.bookingId;
       }
-      
+
       await axiosInstance.post("/albums", payload);
       toast.success("Album mapped successfully");
       onCreated();
@@ -102,7 +102,7 @@ export default function AlbumModal({ isOpen, onClose, onCreated }) {
           onClick={onClose}
           className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         />
-        
+
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -121,12 +121,12 @@ export default function AlbumModal({ isOpen, onClose, onCreated }) {
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
             {/* Mode Toggle */}
             <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
-               <button type="button" onClick={() => setFormData({...formData, mode: 'booking'})} className={`flex-1 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition ${formData.mode === 'booking' ? 'bg-white dark:bg-slate-700 shadow-sm text-cyan-600 dark:text-cyan-400' : 'text-slate-500'}`}>
-                  Link Booking
-               </button>
-               <button type="button" onClick={() => setFormData({...formData, mode: 'manual'})} className={`flex-1 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition ${formData.mode === 'manual' ? 'bg-white dark:bg-slate-700 shadow-sm text-cyan-600 dark:text-cyan-400' : 'text-slate-500'}`}>
-                  Manual Entry
-               </button>
+              <button type="button" onClick={() => setFormData({ ...formData, mode: 'booking' })} className={`flex-1 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition ${formData.mode === 'booking' ? 'bg-white dark:bg-slate-700 shadow-sm text-cyan-600 dark:text-cyan-400' : 'text-slate-500'}`}>
+                Link Booking
+              </button>
+              <button type="button" onClick={() => setFormData({ ...formData, mode: 'manual' })} className={`flex-1 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition ${formData.mode === 'manual' ? 'bg-white dark:bg-slate-700 shadow-sm text-cyan-600 dark:text-cyan-400' : 'text-slate-500'}`}>
+                Manual Entry
+              </button>
             </div>
 
             {formData.mode === "booking" ? (
@@ -152,15 +152,15 @@ export default function AlbumModal({ isOpen, onClose, onCreated }) {
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Client Name</label>
-                  <input required={formData.mode === "manual"} type="text" value={formData.clientName} onChange={(e) => setFormData({...formData, clientName: e.target.value})} className="w-full pl-3 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none transition-all text-sm font-medium" />
+                  <input required={formData.mode === "manual"} type="text" value={formData.clientName} onChange={(e) => setFormData({ ...formData, clientName: e.target.value })} className="w-full pl-3 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none transition-all text-sm font-medium" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Phone</label>
-                  <input type="text" value={formData.clientPhone} onChange={(e) => setFormData({...formData, clientPhone: e.target.value})} className="w-full pl-3 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none transition-all text-sm font-medium" />
+                  <input type="text" value={formData.clientPhone} onChange={(e) => setFormData({ ...formData, clientPhone: e.target.value })} className="w-full pl-3 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none transition-all text-sm font-medium" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Event Date</label>
-                  <input required={formData.mode === "manual"} type="date" value={formData.eventDate} onChange={(e) => setFormData({...formData, eventDate: e.target.value})} className="w-full pl-3 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none transition-all text-sm font-medium" />
+                  <input required={formData.mode === "manual"} type="date" value={formData.eventDate} onChange={(e) => setFormData({ ...formData, eventDate: e.target.value })} className="w-full pl-3 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none transition-all text-sm font-medium" />
                 </div>
               </div>
             )}
@@ -171,21 +171,21 @@ export default function AlbumModal({ isOpen, onClose, onCreated }) {
                 Delivery Format
               </label>
               <div className="flex gap-4">
-                 <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
-                   <input type="radio" value="digital" checked={formData.deliveryMethod === 'digital'} onChange={(e) => setFormData({...formData, deliveryMethod: e.target.value})} className="accent-blue-500 w-4 h-4" />
-                   Digital (G-Drive)
-                 </label>
-                 <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
-                   <input type="radio" value="physical" checked={formData.deliveryMethod === 'physical'} onChange={(e) => setFormData({...formData, deliveryMethod: e.target.value})} className="accent-orange-500 w-4 h-4" />
-                   Physical (Pen Drive)
-                 </label>
+                <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
+                  <input type="radio" value="digital" checked={formData.deliveryMethod === 'digital'} onChange={(e) => setFormData({ ...formData, deliveryMethod: e.target.value })} className="accent-blue-500 w-4 h-4" />
+                  Digital (G-Drive)
+                </label>
+                <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
+                  <input type="radio" value="physical" checked={formData.deliveryMethod === 'physical'} onChange={(e) => setFormData({ ...formData, deliveryMethod: e.target.value })} className="accent-orange-500 w-4 h-4" />
+                  Physical (Pen Drive)
+                </label>
               </div>
             </div>
 
             {formData.deliveryMethod === "digital" && (
               <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}>
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mt-3 mb-2 flex items-center gap-2">
-                   <LinkIcon className="w-3 h-3" /> Google Drive Link
+                  <LinkIcon className="w-3 h-3" /> Google Drive Link
                 </label>
                 <input
                   required={formData.deliveryMethod === "digital"}
@@ -195,7 +195,7 @@ export default function AlbumModal({ isOpen, onClose, onCreated }) {
                   placeholder="https://drive.google.com/drive/folders/..."
                   className="w-full pl-3 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm font-medium"
                 />
-                 <p className="text-[10px] sm:text-xs text-slate-500 mt-1 italic">Ensure link access is set to "Anyone with the link".</p>
+                <p className="text-[10px] sm:text-xs text-slate-500 mt-1 italic">Ensure link access is set to "Anyone with the link".</p>
               </motion.div>
             )}
 
@@ -204,14 +204,14 @@ export default function AlbumModal({ isOpen, onClose, onCreated }) {
                 Curator Type
               </label>
               <div className="flex gap-4">
-                 <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
-                   <input type="radio" value="client" checked={formData.selectionType === 'client'} onChange={(e) => setFormData({...formData, selectionType: e.target.value})} className="accent-cyan-500 w-4 h-4" />
-                   Client Selection
-                 </label>
-                 <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
-                   <input type="radio" value="admin" checked={formData.selectionType === 'admin'} onChange={(e) => setFormData({...formData, selectionType: e.target.value})} className="accent-cyan-500 w-4 h-4" />
-                   Studio Selection
-                 </label>
+                <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
+                  <input type="radio" value="client" checked={formData.selectionType === 'client'} onChange={(e) => setFormData({ ...formData, selectionType: e.target.value })} className="accent-cyan-500 w-4 h-4" />
+                  Client Selection
+                </label>
+                <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
+                  <input type="radio" value="admin" checked={formData.selectionType === 'admin'} onChange={(e) => setFormData({ ...formData, selectionType: e.target.value })} className="accent-cyan-500 w-4 h-4" />
+                  Studio Selection
+                </label>
               </div>
             </div>
 
